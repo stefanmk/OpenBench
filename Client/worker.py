@@ -19,6 +19,8 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 import argparse
+from shutil import copyfile
+
 import cpuinfo
 import json
 import multiprocessing
@@ -108,6 +110,8 @@ class Configuration:
 
     def init_client(self):
 
+        copyfile('cutechess-ob.mac' if self.os_name == 'Darwin' else 'cutechess-ob.linux', 'cutechess-ob')
+
         # Verify that we have make installed
         print('\nLooking for Make... [v%s]' % locate_utility('make'))
 
@@ -176,8 +180,9 @@ class Configuration:
         # For each engine, attempt to find a valid compiler
         for engine, build_info in data.items():
 
+            # SMK: public engines can have access token
             # Public engines don't need access tokens
-            if not build_info['private']: continue
+            # if not build_info['private']: continue
 
             # Private engines expect a credentials.engine file for the main repo
             has_token = os.path.exists('credentials.%s' % (engine.replace(' ', '').lower()))

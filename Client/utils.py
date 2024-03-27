@@ -153,6 +153,9 @@ def check_for_engine_binary(out_path):
 
 def makefile_command(net_path, make_path, out_path, compiler):
 
+    if os.path.isfile(os.path.join(make_path, "custom_make.txt")):
+        return ['/bin/sh', '-c', 'source custom_make.txt && mv engine %s' % (out_path)]
+
     # Build with -j, and EXE= to contol the output location
     command = ['make', '-j', 'EXE=%s' % (out_path)]
 
@@ -298,10 +301,15 @@ def download_public_engine(engine, net_path, branch, source, make_path, out_path
 
         print('Building [%s-%s]' % (engine, branch))
 
+        try:
+            headers = read_git_credentials(engine)
+        except OpenBenchMissingAPICredentialsException:
+            headers = {}
+
         # Download the zip file from Github
         zip_path = os.path.join(temp_dir, '%s-tmp' % (engine))
         with open(zip_path, 'wb') as zip_file:
-            zip_file.write(requests.get(source).content)
+            zip_file.write(requests.get(url=source, headers=headers).content)
 
         # Unzip the engine to a directory called <engine>
         unzip_path = os.path.join(temp_dir, engine)

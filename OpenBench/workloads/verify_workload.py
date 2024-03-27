@@ -359,15 +359,18 @@ def collect_github_info(errors, request, field):
     base    = request.POST['%s_repo' % (field)].replace('github.com', 'api.github.com/repos')
     engine  = request.POST['%s_engine' % (field)]
     private = OpenBench.config.OPENBENCH_CONFIG['engines'][engine]['private']
-    headers = {}
 
     ## Step 1: Verify the target of the API requests
     ## [A] We will not attempt to reach any site other than api.github.com
     ## [B] Private engines may only use their main repo for sources of tests
     ## [C] Determine which, if any, credentials we want to pass along
 
+    # SMK: public engines can have credentials.
+    if not (headers := OpenBench.utils.read_git_credentials(engine)):
+        headers = {}
+
     # Private engines must have a token stored in credentials.enginename
-    if private and not (headers := OpenBench.utils.read_git_credentials(engine)):
+    if private and not headers:
         errors.append('Server does not have access tokens for this engine')
         return (None, None)
 
