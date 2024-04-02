@@ -27,6 +27,12 @@
             "workload_size"     : 32
         },
 
+        "STC Nodes" : {
+            "both_options"      : "Threads=1 Hash=16 NodesTime=1000",
+            "both_time_control" : "10.0+0.10",
+            "workload_size"     : 32
+        },
+
         "LTC" : {
             "both_options"      : "Threads=1 Hash=64",
             "both_time_control" : "60.0+0.6",
@@ -98,6 +104,16 @@
             "book_name" : "Pohl.epd",
             "win_adj"   : "movecount=5 score=600",
             "draw_adj"  : "movenumber=32 movecount=6 score=15"
+        },
+
+        "TUNE" : {
+            "dev_options"      : "Threads=1 Hash=16",
+            "dev_time_control" : "10.0+0.10"
+        },
+
+        "TUNE Nodes" : {
+            "dev_options"      : "Threads=1 Hash=16 NodesTime=1000",
+            "dev_time_control" : "10.0+0.10"
         }
     },
 
