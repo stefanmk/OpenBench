@@ -93,13 +93,15 @@ def longStatBlock(test):
 
     threads     = int(OpenBench.utils.extract_option(test.dev_options, 'Threads'))
     hashmb      = int(OpenBench.utils.extract_option(test.dev_options, 'Hash'))
+    nodestime   = OpenBench.utils.extract_option(test.dev_options, 'NodesTime')
+    nodestime   = ('NT=%s' % (nodestime)) if nodestime != None else ''
     timecontrol = test.dev_time_control + ['s', '']['=' in test.dev_time_control]
     type_text   = 'SPRT' if test.test_mode == 'SPRT' else 'Conf'
 
     lower, elo, upper = OpenBench.stats.ELO([test.losses, test.draws, test.wins])
 
     lines = [
-        'Elo   | %0.2f +- %0.2f (95%%)' % (elo, max(upper - elo, elo - lower)),
+        'Elo   | %0.2f +- %0.2f (95%%)   %s' % (elo, max(upper - elo, elo - lower), nodestime),
         '%-5s | %s Threads=%d Hash=%dMB' % (type_text, timecontrol, threads, hashmb),
     ]
 
