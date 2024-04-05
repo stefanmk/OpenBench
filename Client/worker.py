@@ -997,7 +997,11 @@ def complete_workload(config):
     # Scale using the base factor only, in the event of a cross-engine test
     dev_engine    = config.workload['test']['dev' ]['engine']
     base_engine   = config.workload['test']['base']['engine']
-    scale_factor  = base_factor if dev_engine != base_engine else avg_factor
+    if "nodestime" in config.workload['test']['dev']['options'].lower():
+        print("playing with fixed nodes time so no scaling of time controls")
+        scale_factor  = 1.0
+    else:
+        scale_factor  = base_factor if dev_engine != base_engine else avg_factor
 
     # Launch and manage all of the Cutechess workers
     with ThreadPoolExecutor(max_workers=cutechess_cnt) as executor:
