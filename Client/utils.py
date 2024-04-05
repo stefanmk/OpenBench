@@ -154,7 +154,7 @@ def check_for_engine_binary(out_path):
 def makefile_command(net_path, make_path, out_path, compiler):
 
     if os.path.isfile(os.path.join(make_path, "custom_make.txt")):
-        return ['/bin/sh', '-c', 'source custom_make.txt && mv engine %s' % (out_path)]
+        return ['/bin/bash', '-c', 'source custom_make.txt && mv engine %s' % (out_path)]
 
     # Build with -j, and EXE= to contol the output location
     command = ['make', '-j', 'EXE=%s' % (out_path)]
