@@ -1,6 +1,6 @@
 {
     "private" : false,
-    "nps"     : 3630000,
+    "nps"     : 1100000,
     "source"  : "https://github.com/stefanmk/engine",
 
     "build" : {
@@ -28,8 +28,8 @@
         },
 
         "STC Nodes" : {
-            "both_options"      : "Threads=1 Hash=16 NodesTime=1000",
-            "both_time_control" : "10.0+0.10",
+            "both_options"      : "Threads=1 Hash=16 NodesTime=500",
+            "both_time_control" : "20.0+0.20",
             "workload_size"     : 32
         },
 
